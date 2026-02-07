@@ -38,3 +38,9 @@ class TestPrimeSieve(unittest.TestCase):
 
     def test_prime_sieve_sum_to_one_hundred(self):
         self.assertEqual(sum(prime_sieve(100)), 25)
+
+    def test_prime_sieve_with_negative_length(self):
+        with self.assertRaisesRegex(ValueError, r"cannot be negative"):
+            prime_sieve(-1)
+        with self.assertRaisesRegex(ValueError, r"cannot be negative"):
+            prime_sieve(-6)
