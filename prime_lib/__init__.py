@@ -2,11 +2,13 @@
 
 from .count_primes import count_primes
 from .is_prime import is_prime
+from .prime_factors import prime_factors
 from .prime_sieve import prime_sieve
 
 
 __all__ = [
     "count_primes",
     "is_prime",
+    "prime_factors",
     "prime_sieve",
 ]
