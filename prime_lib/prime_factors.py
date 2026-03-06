@@ -6,13 +6,11 @@ from .prime_sieve import prime_sieve
 
 
 @overload
-def prime_factors(n: int, *, as_dict: Literal[False]) -> list[int]:
-    ...
-
-
+def prime_factors(n: int) -> list[int]: ...
 @overload
-def prime_factors(n: int, *, as_dict: Literal[True]) -> dict[int, int]:
-    ...
+def prime_factors(n: int, *, as_dict: Literal[False]) -> list[int]: ...
+@overload
+def prime_factors(n: int, *, as_dict: Literal[True]) -> dict[int, int]: ...
 
 
 def prime_factors(n: int, *, as_dict: bool = False):
@@ -27,18 +25,21 @@ def prime_factors(n: int, *, as_dict: bool = False):
     if n == 1:
         return factors
 
-    sieve = prime_sieve(n)
-
+    sieve = prime_sieve(n + 1)  # MemoryError if n is too large :(
     for p, p_is_prime in enumerate(sieve):
+
         if p_is_prime:
             q, r = divmod(n, p)
             while r == 0:
-                if as_dict:
+                if isinstance(factors, dict):
                     factors[p] = factors.get(p, 0) + 1
                 else:
                     factors.append(p)
                 n = q
+                if n == 1:
+                    break
                 q, r = divmod(n, p)
+
         if n == 1:
             break
 
